@@ -75,23 +75,21 @@ WSGI_APPLICATION = 'canaco.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'canaco',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': '127.0.0.1',
+        'PORT': '3307',
         'OPTIONS': {
             'charset': 'utf8mb4',
             'use_unicode': True,
-            "init_command": "SET NAMES utf8mb4; SET sql_mode='STRICT_TRANS_TABLES',
-default_storage_engine=INNODB",
+            "init_command": "SET NAMES utf8mb4; SET sql_mode='STRICT_TRANS_TABLES', default_storage_engine=INNODB",
         },
     }
-} """ 
-}
+} 
+
 
 
 # Password validation
@@ -128,7 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'

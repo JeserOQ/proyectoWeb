@@ -1,0 +1,144 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Inicio - Canaco Portal Web{% endblock %}
+
+{% block content %}
+{% static 'assets/img/post_slide_1.jpg' as slide_img_1 %}
+{% static 'assets/img/post-slide-2.jpg' as slide_img_2 %}
+{% static 'assets/img/post-slide-3.jpg' as slide_img_3 %}
+
+<!-- Slider Section de ZenBlog -->
+<section id="slider" class="slider section dark-background">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="swiper init-swiper">
+      <script type="application/json" class="swiper-config">
+        {
+          "loop": true,
+          "speed": 600,
+          "autoplay": {
+            "delay": 5000
+          },
+          "slidesPerView": "auto",
+          "pagination": {
+            "el": ".swiper-pagination",
+            "type": "bullets",
+            "clickable": true
+          },
+          "navigation": {
+            "nextEl": ".swiper-button-next",
+            "prevEl": ".swiper-button-prev"
+          }
+        }
+      </script>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url('{{ slide_img_1 }}');">
+          <div class="content">
+            <h2><a href="{% url 'home:noticia' %}">Título de la Noticia Destacada</a></h2>
+            <p>Resumen de la noticia de portada: Entérate de las principales actividades y noticias del comercio.</p>
+          </div>
+        </div>
+        <div class="swiper-slide" style="background-image: url('{{ slide_img_2 }}');">
+          <div class="content">
+            <h2><a href="{% url 'home:noticia' %}">Impulso a emprendedores y negocios locales</a></h2>
+            <p>Nuevos programas de financiamiento y asesoría técnica para los afiliados a Canaco.</p>
+          </div>
+        </div>
+        <div class="swiper-slide" style="background-image: url('{{ slide_img_3 }}');">
+          <div class="content">
+            <h2><a href="{% url 'home:noticia' %}">Foro de Innovación y Comercio Digital</a></h2>
+            <p>Estrategias clave para aumentar las ventas electrónicas y presencia en el mercado digital.</p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Trending Category Section / Noticias Recientes de ZenBlog -->
+<section id="trending-category" class="trending-category section py-5">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0 fw-bold">Noticias Recientes</h2>
+      <a href="{% url 'home:categoria' %}" class="btn btn-sm btn-outline-dark">Ver todas las noticias</a>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="post-entry lg">
+          <a href="{% url 'home:noticia' %}">
+            <img src="{% static 'assets/img/post-landscape-1.jpg' %}" alt="Noticia Principal" class="img-fluid rounded">
+          </a>
+          <div class="post-meta"><span class="date">Economía</span> <span class="mx-1">&bullet;</span> <span>10 Octubre, 2026</span></div>
+          <h2><a href="{% url 'home:noticia' %}">Crecimiento del sector comercial durante el último trimestre</a></h2>
+          <p class="mb-4 d-block">El comercio en la región reporta cifras positivas y nuevas oportunidades de inversión para pequeñas y medianas empresas.</p>
+          <div class="d-flex align-items-center author">
+            <div class="photo"><img src="{% static 'assets/img/person-1.jpg' %}" alt="Autor" class="img-fluid rounded-circle" style="width: 40px; height: 40px; object-fit: cover;"></div>
+            <div class="name ms-2">
+              <h3 class="m-0 p-0 fs-6">Redacción Canaco</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="row g-5">
+          <div class="col-lg-4 border-start custom-border">
+            <div class="post-entry mb-4">
+              <a href="{% url 'home:noticia' %}"><img src="{% static 'assets/img/post-landscape-2.jpg' %}" alt="" class="img-fluid rounded mb-2"></a>
+              <div class="post-meta"><span class="date">Tecnología</span> <span class="mx-1">&bullet;</span> <span>09 Oct, 2026</span></div>
+              <h2 class="fs-6"><a href="{% url 'home:noticia' %}">Digitalización de pagos en comercios afiliados</a></h2>
+            </div>
+            <div class="post-entry">
+              <a href="{% url 'home:noticia' %}"><img src="{% static 'assets/img/post-landscape-3.jpg' %}" alt="" class="img-fluid rounded mb-2"></a>
+              <div class="post-meta"><span class="date">Capacitación</span> <span class="mx-1">&bullet;</span> <span>08 Oct, 2026</span></div>
+              <h2 class="fs-6"><a href="{% url 'home:noticia' %}">Nuevos talleres empresariales para jóvenes</a></h2>
+            </div>
+          </div>
+
+          <div class="col-lg-4 border-start custom-border">
+            <div class="post-entry mb-4">
+              <a href="{% url 'home:noticia' %}"><img src="{% static 'assets/img/post-landscape-4.jpg' %}" alt="" class="img-fluid rounded mb-2"></a>
+              <div class="post-meta"><span class="date">Turismo</span> <span class="mx-1">&bullet;</span> <span>07 Oct, 2026</span></div>
+              <h2 class="fs-6"><a href="{% url 'home:noticia' %}">Impulso al turismo de negocios y convenciones</a></h2>
+            </div>
+            <div class="post-entry">
+              <a href="{% url 'home:noticia' %}"><img src="{% static 'assets/img/post-landscape-5.jpg' %}" alt="" class="img-fluid rounded mb-2"></a>
+              <div class="post-meta"><span class="date">Eventos</span> <span class="mx-1">&bullet;</span> <span>06 Oct, 2026</span></div>
+              <h2 class="fs-6"><a href="{% url 'home:noticia' %}">Feria anual de proveedores y comerciantes</a></h2>
+            </div>
+          </div>
+
+          <!-- Tendencias / Lista Lateral -->
+          <div class="col-lg-4">
+            <div class="trending border rounded p-3 bg-light">
+              <h3 class="fs-5 border-bottom pb-2">Más Vistas</h3>
+              <ul class="trending-post list-unstyled mb-0 pt-2">
+                <li class="mb-3 pb-3 border-bottom">
+                  <span class="number text-muted fs-4 fw-bold me-2">1</span>
+                  <a href="{% url 'home:noticia' %}" class="text-dark fw-semibold d-inline-block">Reforma fiscal: claves para emprendedores</a>
+                  <div class="text-muted small mt-1">Economía &bull; 1.2k visitas</div>
+                </li>
+                <li class="mb-3 pb-3 border-bottom">
+                  <span class="number text-muted fs-4 fw-bold me-2">2</span>
+                  <a href="{% url 'home:noticia' %}" class="text-dark fw-semibold d-inline-block">Beneficios de afiliarse a Canaco</a>
+                  <div class="text-muted small mt-1">Institucional &bull; 980 visitas</div>
+                </li>
+                <li class="mb-2">
+                  <span class="number text-muted fs-4 fw-bold me-2">3</span>
+                  <a href="{% url 'home:noticia' %}" class="text-dark fw-semibold d-inline-block">Alianzas comerciales internacionales</a>
+                  <div class="text-muted small mt-1">Comercio &bull; 850 visitas</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

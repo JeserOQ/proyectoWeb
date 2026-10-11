@@ -1,0 +1,42 @@
+{% load static %}
+<!-- Footer / Pie de página ZenBlog -->
+<footer id="footer" class="footer dark-background">
+  <div class="container footer-top">
+    <div class="row gy-4">
+      <div class="col-lg-5 col-md-12 footer-about">
+        <a href="{% url 'home:index' %}" class="logo d-flex align-items-center">
+          <span class="sitename">Canaco</span>
+        </a>
+        <p>Portal oficial informativo y de noticias de la Cámara Nacional de Comercio. Entérate de los acontecimientos más relevantes del comercio y la economía local y nacional.</p>
+        <div class="social-links d-flex mt-4">
+          <a href="#" class="me-2"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="me-2"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6 footer-links">
+        <h4>Enlaces Rápidos</h4>
+        <ul>
+          <li><a href="{% url 'home:index' %}">Inicio</a></li>
+          <li><a href="{% url 'home:categoria' %}">Categorías</a></li>
+          <li><a href="{% url 'home:noticia' %}">Noticias Recientes</a></li>
+          <li><a href="{% url 'home:contactanos' %}">Contáctanos</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-4 col-6 footer-contact">
+        <h4>Contacto Canaco</h4>
+        <p>Cámara Nacional de Comercio, Servicios y Turismo</p>
+        <p>México</p>
+        <p class="mt-3"><strong>Email:</strong> <span>contacto@canaco.org</span></p>
+        <p><strong>Teléfono:</strong> <span>+52 (55) 1234 5678</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container copyright text-center mt-4">
+    <p>&copy; <span>Copyright</span> <strong class="px-1 sitename">Canaco</strong>. <span>Todos los derechos reservados.</span></p>
+  </div>
+</footer>

@@ -1,0 +1,39 @@
+{% load static %}
+<!-- Header / Menú de Navegación ZenBlog -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container position-relative d-flex align-items-center justify-content-between">
+
+    <a href="{% url 'home:index' %}" class="logo d-flex align-items-center me-auto me-xl-0">
+      <h1 class="sitename">Canaco</h1>
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="{% url 'home:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Inicio</a></li>
+        <li class="dropdown"><a href="{% url 'home:categoria' %}" class="{% if request.resolver_match.url_name == 'categoria' %}active{% endif %}"><span>Categorías</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="{% url 'home:categoria' %}">Todas las categorías</a></li>
+          </ul>
+        </li>
+        <li><a href="{% url 'home:noticia' %}" class="{% if request.resolver_match.url_name == 'noticia' %}active{% endif %}">Noticias</a></li>
+        <li><a href="{% url 'home:contactanos' %}" class="{% if request.resolver_match.url_name == 'contactanos' %}active{% endif %}">Contacto</a></li>
+        {% if request.user.is_authenticated %}
+          <li><a href="{% url 'home:perfil' %}" class="{% if request.resolver_match.url_name == 'perfil' %}active{% endif %}">Perfil</a></li>
+          <li><a href="{% url 'home:crud_noticias' %}">Panel Admin</a></li>
+        {% endif %}
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    <div class="header-actions d-flex align-items-center gap-2">
+      {% if request.user.is_authenticated %}
+        <span class="text-muted d-none d-lg-inline small">Hola, {{ request.user.username }}</span>
+        <a href="{% url 'home:perfil' %}" class="btn btn-sm btn-outline-dark">Mi Perfil</a>
+      {% else %}
+        <a href="{% url 'home:login' %}" class="btn btn-sm btn-outline-dark">Iniciar sesión</a>
+        <a href="{% url 'home:sign_up' %}" class="btn btn-sm btn-dark">Registro</a>
+      {% endif %}
+    </div>
+
+  </div>
+</header>

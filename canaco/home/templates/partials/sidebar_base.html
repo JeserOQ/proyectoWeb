@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% comment %}
+  Plantilla base del panel de administración.
+  Usa la misma base de ZenBlog (home/base.html) para que cabecera, pie y estilos
+  sean los mismos en todo el sitio. Las vistas hijas siguen usando
+  {% block content %} como indican los laboratorios.
+{% endcomment %}
+{% block body_class %}panel-page{% endblock %}
+
+{% block main %}
+<main class="main">
+  <section class="cn-panel">
+    <div class="container">
+      <div class="cn-panel-layout">
+        {% include 'partials/sidebar.html' %}
+        <div class="cn-panel-content">
+          {% include 'partials/messages.html' %}
+          {% block content %}
+          {% endblock content %}
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock main %}

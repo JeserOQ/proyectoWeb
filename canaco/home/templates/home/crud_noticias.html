@@ -1,11 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'partials/sidebar_base.html' %}
+{% load static %}
+{% block title %}Noticias{% endblock %}
+{% block content %}
+<div class="cn-page-header">
+    <div>
+        <h1>Publicaciones</h1>
+        <p>Crea, edita, publica u oculta las noticias del portal.</p>
+    </div>
+    <a href="{% url 'home:crear_publicacion' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i> Crear publicación
+    </a>
+</div>
+
+<div class="cn-card cn-card-flush">
+    <div class="table-responsive">
+        <table class="table cn-table align-middle">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Creación</th>
+                    <th>Actualización</th>
+                    <th class="text-center">Visitas</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for noticia in publicaciones %}
+                <tr>
+                    <td class="cn-title-cell">{{ noticia.titulo }}</td>
+                    <td>{% if noticia.autor %}{{ noticia.autor.username }}{% else %}-{% endif %}</td>
+                    <td class="text-nowrap">{{ noticia.createdat|date:"d/m/Y" }}</td>
+                    <td class="text-nowrap">{{ noticia.updatedat|date:"d/m/Y" }}</td>
+                    <td class="text-center">{{ noticia.visitas }}</td>
+                    <td>
+                        {% if noticia.estado == 'publicado' %}
+                            <span class="badge text-bg-success">Publicado</span>
+                        {% else %}
+                            <span class="badge text-bg-warning">Borrador</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="cn-actions">
+                            <a href="{% url 'home:noticia_detalle' noticia.id %}" class="btn btn-outline-secondary btn-sm" title="Ver" aria-label="Ver">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'home:editar_publicacion' noticia.id %}" class="btn btn-outline-primary btn-sm" title="Editar" aria-label="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a href="{% url 'home:publicar_publicacion' noticia.id %}"
+                               class="btn btn-sm {% if noticia.estado == 'publicado' %}btn-outline-warning{% else %}btn-outline-success{% endif %}"
+                               title="{% if noticia.estado == 'publicado' %}Ocultar{% else %}Publicar{% endif %}"
+                               aria-label="{% if noticia.estado == 'publicado' %}Ocultar{% else %}Publicar{% endif %}">
+                                <i class="bi {% if noticia.estado == 'publicado' %}bi-eye-slash{% else %}bi-cloud-arrow-up{% endif %}"></i>
+                            </a>
+                            <form method="post" action="{% url 'home:eliminar_publicacion' noticia.id %}"
+                                  onsubmit="return confirm('¿Eliminar esta publicación? Esta acción no se puede deshacer.');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm" title="Eliminar" aria-label="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7" class="cn-empty">No hay publicaciones todavía.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

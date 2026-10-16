@@ -1,11 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'partials/sidebar_base.html' %}
+{% load static %}
+{% block title %}Editar Categoría{% endblock %}
+{% block content %}
+<div class="profile-page">
+    <div class="profile-edit-card">
+        <h3>Editar categoría</h3>
+        <p>Cambia el nombre con el que se muestra esta categoría en el portal.</p>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ categoria.nombre }}" maxlength="60" required>
+            </div>
+            <div class="profile-form-actions">
+                <a href="{% url 'home:crud_categorias' %}" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

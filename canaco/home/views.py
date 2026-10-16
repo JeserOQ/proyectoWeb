@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth import logout
 
 # Create your views here.
 
@@ -29,6 +30,9 @@ def crear_publicacion(request):
 
 def crear_usuario(request):
     return render(request, 'home/crear_usuario.html')
+
+def cerrar_sesion_view(request):
+    return redirect('home:login.html') # Redirige a la vista de inicio de sesión
 
 
 # Vistas de Panel Administrador / CRUD

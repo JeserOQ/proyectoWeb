@@ -1,11 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}Categorías{% endblock %}
+{% block content %}
+<section class="cn-public">
+    <div class="container">
+        <div class="row align-items-center g-3 mb-4">
+            <div class="col-lg-8">
+                <h1 class="mb-0">Categoría: Tecnología</h1>
+            </div>
+            <div class="col-lg-4">
+                <label for="filtro-categoria" class="visually-hidden">Filtrar por categoría</label>
+                <select id="filtro-categoria" class="form-select">
+                    <option value="categorias">Todas las categorías</option>
+                    <option value="tecnologia">Tecnología</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="cn-post-list">
+            <article class="cn-post-row">
+                <a href="{% url 'home:noticia' %}">
+                    <img src="{% static 'assets/img/post-landscape-1.jpg' %}" alt="Título de la noticia">
+                </a>
+                <div>
+                    <div class="cn-meta"><span><i class="bi bi-calendar3"></i>Fecha</span><span><i class="bi bi-tag"></i>Categoría</span></div>
+                    <h2><a href="{% url 'home:noticia' %}">Título de la noticia</a></h2>
+                    <p class="text-muted">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500.</p>
+                    <a href="{% url 'home:noticia' %}" class="btn btn-sm btn-outline-dark">Leer más</a>
+                </div>
+            </article>
+            {# Cuando conectes la vista, aquí va el estado vacío dentro del for con empty: "No hay noticias para esta categoría." #}
+        </div>
+    </div>
+</section>
+{% endblock content %}

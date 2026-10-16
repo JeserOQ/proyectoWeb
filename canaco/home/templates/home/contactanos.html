@@ -1,11 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}Contacto{% endblock %}
+{% block content %}
+<section class="cn-public">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1>Contáctanos</h1>
+            <p class="text-muted mb-0">Cámara Nacional de Comercio, Servicios y Turismo</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="cn-side-box text-center h-100">
+                    <i class="bi bi-envelope fs-2"></i>
+                    <h3 class="mt-2">Correo</h3>
+                    <p class="mb-0">contacto@canaco.org</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="cn-side-box text-center h-100">
+                    <i class="bi bi-telephone fs-2"></i>
+                    <h3 class="mt-2">Teléfono</h3>
+                    <p class="mb-0">+52 (55) 1234 5678</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="cn-side-box text-center h-100">
+                    <i class="bi bi-geo-alt fs-2"></i>
+                    <h3 class="mt-2">Ubicación</h3>
+                    <p class="mb-0">México</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

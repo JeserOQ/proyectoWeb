@@ -1,11 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'partials/sidebar_base.html' %}
+{% load static %}
+{% block title %}Comentarios{% endblock %}
+{% block content %}
+<div class="cn-page-header">
+    <div>
+        <h1>Comentarios</h1>
+        <p>Modera los comentarios que los usuarios dejan en las noticias.</p>
+    </div>
+</div>
+
+<div class="cn-card cn-card-flush">
+    <div class="table-responsive">
+        <table class="table cn-table align-middle">
+            <thead>
+                <tr>
+                    <th>Autor</th>
+                    <th>Noticia</th>
+                    <th>Fecha</th>
+                    <th>Comentario</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comentario in comentarios %}
+                <tr>
+                    <td class="fw-semibold">{{ comentario.user.username }}</td>
+                    <td class="cn-wrap-cell">{{ comentario.publicacion.titulo }}</td>
+                    <td class="text-nowrap">{{ comentario.createdat|date:"d/m/Y H:i" }}</td>
+                    <td class="cn-wrap-cell">{{ comentario.contenido }}</td>
+                    <td>
+                        {% if comentario.estado == 'aprobado' %}
+                            <span class="badge text-bg-success">Aprobado</span>
+                        {% elif comentario.estado == 'bloqueado' %}
+                            <span class="badge text-bg-danger">Bloqueado</span>
+                        {% else %}
+                            <span class="badge text-bg-warning">Pendiente</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="cn-actions">
+                            <a href="{% url 'home:aprobar_comentario' comentario.id %}" class="btn btn-outline-success btn-sm" title="Aprobar" aria-label="Aprobar">
+                                <i class="bi bi-check-lg"></i>
+                            </a>
+                            <a href="{% url 'home:bloquear_comentario' comentario.id %}" class="btn btn-outline-warning btn-sm" title="Bloquear" aria-label="Bloquear">
+                                <i class="bi bi-slash-circle"></i>
+                            </a>
+                            <form method="post" action="{% url 'home:eliminar_comentario' comentario.id %}"
+                                  onsubmit="return confirm('¿Eliminar este comentario?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm" title="Eliminar" aria-label="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="cn-empty">No hay comentarios.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

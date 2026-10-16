@@ -1,11 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'partials/sidebar_base.html' %}
+{% load static %}
+{% block title %}Cambiar Contraseña{% endblock %}
+{% block content %}
+<div class="profile-page">
+    <div class="profile-edit-card">
+        <h3>Cambiar contraseña</h3>
+        <p>Esta acción modifica la contraseña de tu cuenta actual: <strong>{{ request.user.username }}</strong>.</p>
+
+        <form method="POST" class="profile-edit-form">
+            {% csrf_token %}
+
+            <div class="profile-form-row">
+                <label for="actual">Contraseña actual</label>
+                <input type="password" id="actual" name="actual" autocomplete="current-password" required>
+            </div>
+
+            <div class="profile-form-row">
+                <label for="nueva">Nueva contraseña</label>
+                <input type="password" id="nueva" name="nueva" autocomplete="new-password" required>
+            </div>
+
+            <div class="profile-form-row">
+                <label for="confirmar">Confirmar contraseña</label>
+                <input type="password" id="confirmar" name="confirmar" autocomplete="new-password" required>
+            </div>
+
+            <div class="profile-form-actions">
+                <a href="{% url 'home:perfil' %}" class="btn btn-outline-secondary">Volver a mi perfil</a>
+                <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

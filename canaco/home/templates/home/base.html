@@ -21,19 +21,24 @@
   <!-- Main CSS File de ZenBlog -->
   <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
 
+  <!-- Estilos propios de Canaco (panel, formularios, noticias) -->
+  <link href="{% static 'css/canaco_panel.css' %}" rel="stylesheet">
+
   {% block extra_css %}{% endblock extra_css %}
 </head>
 
-<body class="index-page">
+<body class="{% block body_class %}index-page{% endblock %}">
 
   <!-- Header / Menú de navegación -->
   {% include 'partials/header.html' %}
 
   <!-- Contenido Principal -->
+  {% block main %}
   <main class="main">
     {% block content %}
     {% endblock content %}
   </main>
+  {% endblock main %}
 
   <!-- Footer -->
   {% include 'partials/footer.html' %}

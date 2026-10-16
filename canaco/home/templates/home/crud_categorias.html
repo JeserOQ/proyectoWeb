@@ -1,11 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'partials/sidebar_base.html' %}
+{% load static %}
+{% block title %}Categorías{% endblock %}
+{% block content %}
+<div class="cn-page-header">
+    <div>
+        <h1>Categorías</h1>
+        <p>Organiza las noticias del portal por temas.</p>
+    </div>
+</div>
+
+<div class="cn-card mb-4">
+    <h2 class="cn-card-title">Agregar categoría</h2>
+    <form method="POST" class="row g-2">
+        {% csrf_token %}
+        <div class="col-sm-9">
+            <input type="text" name="nombre" class="form-control" placeholder="Nombre de la nueva categoría" maxlength="60" required>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Agregar
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="cn-card cn-card-flush">
+    <div class="table-responsive">
+        <table class="table cn-table align-middle">
+            <thead>
+                <tr>
+                    <th style="width: 60px;">#</th>
+                    <th>Nombre</th>
+                    <th>Registrado por</th>
+                    <th>Fecha</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categoria in categorias %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="fw-semibold">{{ categoria.nombre }}</td>
+                    <td>{% if categoria.fk_user %}{{ categoria.fk_user.username }}{% else %}-{% endif %}</td>
+                    <td class="text-nowrap">{{ categoria.createdat|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <div class="cn-actions">
+                            <a href="{% url 'home:editar_categoria' categoria.id %}" class="btn btn-outline-primary btn-sm" title="Editar" aria-label="Editar">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <form method="post" action="{% url 'home:eliminar_categoria' categoria.id %}"
+                                  onsubmit="return confirm('¿Eliminar esta categoría?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm" title="Eliminar" aria-label="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="cn-empty">No hay categorías aún.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

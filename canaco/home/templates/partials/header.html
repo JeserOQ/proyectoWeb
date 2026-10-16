@@ -10,9 +10,11 @@
     <nav id="navmenu" class="navmenu">
       <ul>
         <li><a href="{% url 'home:index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Inicio</a></li>
-        <li class="dropdown"><a href="{% url 'home:categoria' %}" class="{% if request.resolver_match.url_name == 'categoria' %}active{% endif %}"><span>Categorías</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+        <li class="dropdown">
+          <a href="{% url 'home:categoria' %}" class="{% if request.resolver_match.url_name == 'categoria' %}active{% endif %}"><span>Categorías</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
           <ul>
             <li><a href="{% url 'home:categoria' %}">Todas las categorías</a></li>
+            <li><a href="{% url 'home:categoria' %}">Tecnología</a></li>
           </ul>
         </li>
         <li><a href="{% url 'home:noticia' %}" class="{% if request.resolver_match.url_name == 'noticia' %}active{% endif %}">Noticias</a></li>

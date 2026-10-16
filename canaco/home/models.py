@@ -10,6 +10,7 @@ class Categoria(models.Model):
         serialize=False,
         verbose_name='ID',
     )
+
     nombre = models.CharField(max_length=60)
     createdat = models.DateTimeField(auto_now_add=True)
     updatedat = models.DateTimeField(null=True, blank=True)
@@ -23,7 +24,7 @@ class Categoria(models.Model):
     def __str__(self):
         return self.nombre
 
-
+#Archivo
 class Archivo(models.Model):
     nombre = models.CharField(max_length=255)
     nombre_temporal = models.CharField(max_length=255)
@@ -47,7 +48,7 @@ class Archivo(models.Model):
             return self.ruta.url
         return ''
 
-
+#Perfil
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     foto_perfil = models.ForeignKey(Archivo, null=True, blank=True, on_delete=models.SET_NULL)
@@ -62,7 +63,7 @@ class Perfil(models.Model):
     def __str__(self):
         return f'Perfil de {self.user.username}'
 
-
+#Publicacion
 class Publicacion(models.Model):
     ESTADO_BORRADOR = 'borrador'
     ESTADO_PUBLICADO = 'publicado'
@@ -100,7 +101,7 @@ class Publicacion(models.Model):
     def publicada(self):
         return self.estado == self.ESTADO_PUBLICADO
 
-
+#Galeria
 class GaleriaPublicacion(models.Model):
     publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='galeria')
     archivo = models.ForeignKey(Archivo, on_delete=models.CASCADE)
@@ -114,7 +115,7 @@ class GaleriaPublicacion(models.Model):
     def __str__(self):
         return f'Imagen {self.id} de {self.publicacion.titulo}'
 
-
+#Comentarios
 class Comentario(models.Model):
     ESTADO_PENDIENTE = 'pendiente'
     ESTADO_APROBADO = 'aprobado'

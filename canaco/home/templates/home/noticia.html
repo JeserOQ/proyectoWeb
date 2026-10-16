@@ -1,0 +1,91 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}Título de la noticia{% endblock %}
+{% block content %}
+<section class="cn-public">
+    <div class="container">
+        <div class="row g-5">
+
+            <!-- Artículo -->
+            <article class="col-lg-8">
+                <h1 class="mb-3">Título de la noticia</h1>
+                <div class="cn-meta mb-4">
+                    <span><i class="bi bi-calendar3"></i>Fecha</span>
+                    <span><i class="bi bi-tag"></i>Categoría</span>
+                    <span><i class="bi bi-eye"></i>4 visitas</span>
+                </div>
+
+                <img src="{% static 'assets/img/post-landscape-1.jpg' %}" alt="Portada de la noticia" class="cn-cover mb-4">
+
+                <p class="cn-lead mb-4">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500.</p>
+
+                <div class="cn-article-body">Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio.
+
+Tiene sus raíces en una pieza clásica de la literatura del Latín, que data del año 45 antes de Cristo, haciendo que este adquiera más de 2000 años de antigüedad.
+
+Richard McClintock, un profesor de Latín de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable.</div>
+
+                <h2 class="fs-4 mt-5 mb-3">Galería</h2>
+                <div class="row g-3 cn-gallery">
+                    <div class="col-6 col-md-4">
+                        <img src="{% static 'assets/img/post-landscape-2.jpg' %}" alt="Galería">
+                    </div>
+                </div>
+                {# Estado vacío de la galería: "Sin imágenes en galería." (se activará con la vista) #}
+
+                <!-- Comentarios -->
+                <div class="mt-5">
+                    <h2 class="fs-4 mb-3">Comentarios</h2>
+                    <div class="cn-comment">
+                        <strong>Usuario Alfredos</strong>
+                        <span class="text-muted small ms-2">fecha</span>
+                        <p class="mb-0 mt-1">Me gustó la noticia</p>
+                    </div>
+                    {# Estado vacío: "No hay comentarios aprobados todavía." #}
+
+                    {% if request.user.is_authenticated %}
+                    <form method="POST" class="mt-4">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="contenido" class="form-label fw-semibold">Agregar comentario</label>
+                            <textarea name="contenido" id="contenido" rows="4" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Publicar comentario</button>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-light border mt-4 mb-0">
+                        <a href="{% url 'home:login' %}" class="fw-semibold">Inicia sesión</a> para comentar.
+                    </div>
+                    {% endif %}
+                </div>
+            </article>
+
+            <!-- Barra lateral -->
+            <aside class="col-lg-4">
+                <div class="cn-side-box">
+                    <h3>Otras noticias</h3>
+                    <ul class="cn-side-list">
+                        <li>
+                            <a href="{% url 'home:noticia' %}">
+                                <img src="{% static 'assets/img/post-landscape-3.jpg' %}" alt="Título">
+                                <div>
+                                    <h4>Título</h4>
+                                    <div class="cn-meta"><span>Fecha</span></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="cn-side-box">
+                    <h3>Categorías</h3>
+                    <ul class="cn-side-list">
+                        <li><a href="{% url 'home:categoria' %}"><i class="bi bi-tag"></i> Tecnología</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</section>
+{% endblock content %}

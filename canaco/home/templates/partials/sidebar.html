@@ -2,7 +2,7 @@
 {% with current=request.resolver_match.url_name %}
 <aside class="cn-sidebar" aria-label="Menú del panel">
   <div class="cn-sidebar-head">
-    <small>Panel de administración</small>
+    <small>{% if request.user.is_staff %}Panel de administración{% else %}Mi cuenta{% endif %}</small>
     <strong>{{ request.user.username }}</strong>
   </div>
 
@@ -12,6 +12,8 @@
         <i class="bi bi-person-circle"></i><span>Mi perfil</span>
       </a>
     </li>
+
+    {% if request.user.is_staff %}
     <li class="nav-item">
       <a href="{% url 'home:crud_noticias' %}" class="nav-link {% if current == 'crud_noticias' or current == 'crear_publicacion' or current == 'editar_publicacion' %}active{% endif %}">
         <i class="bi bi-newspaper"></i><span>Noticias</span>
@@ -32,6 +34,8 @@
         <i class="bi bi-people"></i><span>Usuarios</span>
       </a>
     </li>
+    {% endif %}
+
     <li class="nav-item">
       <a href="{% url 'home:crud_cambiar_contrasena' %}" class="nav-link {% if current == 'crud_cambiar_contrasena' %}active{% endif %}">
         <i class="bi bi-key"></i><span>Cambiar contraseña</span>
@@ -40,7 +44,7 @@
   </ul>
 
   <div class="cn-sidebar-logout">
-    <form method="post" action="{% url 'home:login' %}">
+    <form method="post" action="{% url 'home:logout' %}">
       {% csrf_token %}
       <button type="submit" class="btn btn-outline-danger w-100">
         <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión

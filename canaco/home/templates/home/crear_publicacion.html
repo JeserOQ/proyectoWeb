@@ -67,10 +67,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="imagen_portada" class="form-label">Imagen de portada</label>
-                    <input type="file" class="form-control" id="imagen_portada" name="imagen_portada" accept="image/*">
+                    <label for="imagen_portada" class="form-label">Imagen de portada <span class="text-danger">*</span></label>
+                    <input type="file" class="form-control" id="imagen_portada" name="imagen_portada" accept="image/*" {% if not publicacion or not publicacion.imagen_portada %}required{% endif %}>
                     {% if publicacion and publicacion.imagen_portada %}
-                        <div class="form-text">Actual: {{ publicacion.imagen_portada.nombre }}</div>
+                        <div class="form-text">Actual: {{ publicacion.imagen_portada.nombre }} (deja vacío para conservar la actual)</div>
+                    {% else %}
+                        <div class="form-text text-muted">Obligatorio: debes seleccionar una imagen de portada.</div>
                     {% endif %}
                 </div>
 

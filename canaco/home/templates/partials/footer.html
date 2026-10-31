@@ -3,7 +3,7 @@
 <footer id="footer" class="footer dark-background">
   <div class="container footer-top">
     <div class="row gy-4">
-      <div class="col-lg-5 col-md-12 footer-about">
+      <div class="col-lg-4 col-md-12 footer-about">
         <a href="{% url 'home:index' %}" class="logo d-flex align-items-center">
           <span class="sitename">Canaco</span>
         </a>
@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <div class="col-lg-3 col-6 footer-links">
+      <div class="col-lg-2 col-6 footer-links">
         <h4>Enlaces Rápidos</h4>
         <ul>
           <li><a href="{% url 'home:index' %}">Inicio</a></li>
@@ -26,7 +26,28 @@
         </ul>
       </div>
 
-      <div class="col-lg-4 col-6 footer-contact">
+      <div class="col-lg-3 col-md-6">
+        <h4>Entradas Recientes</h4>
+        <ul class="list-unstyled mb-0">
+          {% for noticia in global_recientes %}
+          <li class="d-flex align-items-center mb-3">
+            {% if noticia.imagen_portada %}
+            <a href="{% url 'home:noticia_detalle' noticia.id %}" class="flex-shrink-0">
+              <img src="{{ noticia.imagen_portada.display_url }}" alt="{{ noticia.titulo }}" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+            </a>
+            {% endif %}
+            <div>
+              <a href="{% url 'home:noticia_detalle' noticia.id %}" class="d-block lh-sm">{{ noticia.titulo }}</a>
+              <small class="opacity-75">{{ noticia.createdat|date:"d M, Y" }}</small>
+            </div>
+          </li>
+          {% empty %}
+          <li><span class="opacity-75">No hay noticias recientes.</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="col-lg-3 col-md-6 footer-contact">
         <h4>Contacto Canaco</h4>
         <p>Cámara Nacional de Comercio, Servicios y Turismo</p>
         <p>México</p>

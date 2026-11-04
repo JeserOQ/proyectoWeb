@@ -1,4 +1,4 @@
-import os
+﻿import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import logout, update_session_auth_hash
@@ -19,7 +19,7 @@ def operador_required(view_func):
         if not request.user.is_authenticated:
             return redirect_to_login(request.get_full_path(), 'home:login')
         if not es_operador(request.user):
-            messages.error(request, 'No tienes permiso para acceder a esa página.')
+            messages.error(request, 'No tienes permiso para acceder a esa pÃ¡gina.')
             return redirect('home:perfil')
         return view_func(request, *args, **kwargs)
     return wrapper
@@ -37,7 +37,7 @@ def guardar_archivo(upload, user):
     )
 
 
-# Vistas Generales / Públicas
+# Vistas Generales / PÃºblicas
 def index(request):
     publicaciones = Publicacion.objects.filter(
         estado=Publicacion.ESTADO_PUBLICADO,
@@ -81,7 +81,7 @@ def noticia(request, pk=None):
         publicacion = qs.order_by('-createdat').first()
 
     if not publicacion:
-        messages.info(request, 'Todavía no hay noticias publicadas.')
+        messages.info(request, 'TodavÃ­a no hay noticias publicadas.')
         return redirect('home:index')
 
     cookie_name = f'noticia_vista_{publicacion.pk}'
@@ -95,7 +95,7 @@ def noticia(request, pk=None):
 
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            messages.error(request, 'Debes iniciar sesión para comentar.')
+            messages.error(request, 'Debes iniciar sesiÃ³n para comentar.')
             return redirect('home:login')
         contenido = request.POST.get('contenido', '').strip()
         if contenido:
@@ -104,7 +104,7 @@ def noticia(request, pk=None):
                 user=request.user,
                 contenido=contenido,
             )
-            messages.success(request, 'Comentario enviado. Será visible cuando lo apruebe el administrador.')
+            messages.success(request, 'Comentario enviado. SerÃ¡ visible cuando lo apruebe el administrador.')
         return redirect('home:noticia_detalle', pk=publicacion.pk)
 
     recientes = Publicacion.objects.filter(
@@ -143,15 +143,15 @@ def sign_up(request):
         password2 = request.POST.get('password2', '')
 
         if password1 != password2:
-            messages.error(request, 'Las contraseñas no coinciden.')
+            messages.error(request, 'Las contraseÃ±as no coinciden.')
             return redirect('home:sign_up')
 
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'El nombre de usuario ya está en uso.')
+            messages.error(request, 'El nombre de usuario ya estÃ¡ en uso.')
             return redirect('home:sign_up')
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, 'El correo electrónico ya está registrado.')
+            messages.error(request, 'El correo electrÃ³nico ya estÃ¡ registrado.')
             return redirect('home:sign_up')
 
         user = User.objects.create_user(username=username, email=email, password=password1)
@@ -162,7 +162,7 @@ def sign_up(request):
         perfil.apellido_paterno = apellido_paterno
         perfil.apellido_materno = apellido_materno
         perfil.save()
-        messages.success(request, 'Tu cuenta ha sido creada con éxito. Ahora puedes iniciar sesión.')
+        messages.success(request, 'Tu cuenta ha sido creada con Ã©xito. Ahora puedes iniciar sesiÃ³n.')
         return redirect('home:login')
 
     return render(request, 'home/sign_up.html')
@@ -191,7 +191,7 @@ def crear_publicacion(request):
                 publicacion=publicacion,
                 archivo=guardar_archivo(imagen, request.user),
             )
-        messages.success(request, 'Publicación creada correctamente.')
+        messages.success(request, 'PublicaciÃ³n creada correctamente.')
         return redirect('home:crud_noticias')
     return render(request, 'home/crear_publicacion.html', {'categorias': categorias})
 
@@ -207,10 +207,10 @@ def crear_usuario(request):
         password2 = request.POST.get('password2', '')
 
         if not username or not password1:
-            messages.error(request, 'Usuario y contraseña son obligatorios.')
+            messages.error(request, 'Usuario y contraseÃ±a son obligatorios.')
             return redirect('home:crear_usuario')
         if password1 != password2:
-            messages.error(request, 'Las contraseñas no coinciden.')
+            messages.error(request, 'Las contraseÃ±as no coinciden.')
             return redirect('home:crear_usuario')
         if User.objects.filter(username=username).exists():
             messages.error(request, 'El usuario ya existe.')
@@ -234,8 +234,8 @@ def crear_usuario(request):
 
 
 def cerrar_sesion_view(request):
-    return redirect('home:login.html') # Redirige a la vista de inicio de sesión
-
+    logout(request)
+    return redirect('home:login')  # Redirige al login tras cerrar sesion
 
 # Vistas de Panel Administrador / CRUD
 @login_required
@@ -248,18 +248,18 @@ def crud_cambiar_contrasena(request):
         user = request.user
 
         if not user.check_password(actual):
-            messages.error(request, 'La contraseña actual es incorrecta.')
+            messages.error(request, 'La contraseÃ±a actual es incorrecta.')
             return redirect('home:crud_cambiar_contrasena')
 
         if nueva != confirmar:
-            messages.error(request, 'Las nuevas contraseñas no coinciden.')
+            messages.error(request, 'Las nuevas contraseÃ±as no coinciden.')
             return redirect('home:crud_cambiar_contrasena')
 
         user.set_password(nueva)
         user.save()
         update_session_auth_hash(request, user)
 
-        messages.success(request, 'Contraseña actualizada correctamente.')
+        messages.success(request, 'ContraseÃ±a actualizada correctamente.')
         return redirect('home:crud_cambiar_contrasena')
 
     return render(request, 'home/crud_cambiar_contrasena.html')
@@ -271,7 +271,7 @@ def crud_categorias(request):
         nombre = request.POST.get('nombre', '').strip()
         if nombre:
             Categoria.objects.create(nombre=nombre, fk_user=request.user)
-            messages.success(request, 'Categoría agregada correctamente.')
+            messages.success(request, 'CategorÃ­a agregada correctamente.')
             return redirect('home:crud_categorias')
     categorias = Categoria.objects.all().order_by('-createdat')
     return render(request, 'home/crud_categorias.html', {'categorias': categorias})
@@ -332,7 +332,7 @@ def editar_publicacion(request, pk):
                 publicacion=publicacion,
                 archivo=guardar_archivo(imagen, request.user),
             )
-        messages.success(request, 'Publicación actualizada correctamente.')
+        messages.success(request, 'PublicaciÃ³n actualizada correctamente.')
         return redirect('home:crud_noticias')
     return render(request, 'home/crear_publicacion.html', {
         'categorias': categorias,
@@ -354,7 +354,7 @@ def eliminar_publicacion(request, pk):
     publicacion = get_object_or_404(Publicacion, pk=pk)
     if request.method == 'POST':
         publicacion.delete()
-        messages.success(request, 'Publicación eliminada correctamente.')
+        messages.success(request, 'PublicaciÃ³n eliminada correctamente.')
     return redirect('home:crud_noticias')
 
 @login_required
@@ -374,7 +374,7 @@ def crud_perfil(request):
             messages.error(request, 'El usuario es obligatorio.')
             return redirect('home:crud_perfil')
         if User.objects.filter(username=username).exclude(pk=user.pk).exists():
-            messages.error(request, 'Ese nombre de usuario ya está en uso.')
+            messages.error(request, 'Ese nombre de usuario ya estÃ¡ en uso.')
             return redirect('home:crud_perfil')
 
         user.username = username
@@ -420,7 +420,7 @@ def editar_categoria(request, pk):
         if nombre:
             categoria.nombre = nombre
             categoria.save()
-            messages.success(request, 'Categoría actualizada correctamente.')
+            messages.success(request, 'CategorÃ­a actualizada correctamente.')
         return redirect('home:crud_categorias')
     return render(request, 'home/editar_categoria.html', {'categoria': categoria})
 
@@ -430,7 +430,7 @@ def eliminar_categoria(request, pk):
     categoria = get_object_or_404(Categoria, pk=pk)
     if request.method == 'POST':
         categoria.delete()
-        messages.success(request, 'Categoría eliminada correctamente.')
+        messages.success(request, 'CategorÃ­a eliminada correctamente.')
     return redirect('home:crud_categorias')
 
 @operador_required
@@ -452,7 +452,7 @@ def editar_usuario(request, pk):
         password2 = request.POST.get('password2', '')
         if password1 or password2:
             if password1 != password2:
-                messages.error(request, 'Las contraseñas no coinciden.')
+                messages.error(request, 'Las contraseÃ±as no coinciden.')
                 return redirect('home:editar_usuario', pk=usuario.pk)
             usuario.set_password(password1)
         usuario.save()

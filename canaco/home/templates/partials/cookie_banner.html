@@ -1,0 +1,52 @@
+<div id="aviso-cookies" class="fixed-bottom bg-dark text-white p-3" style="display:none; z-index:2000;" role="region" aria-label="Aviso de cookies">
+  <div class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+    <span>
+      Usamos Google Analytics para medir las visitas del sitio. Solo se activa si aceptas.
+      Más información en el <a href="{% url 'home:privacidad' %}" class="text-white text-decoration-underline">aviso de privacidad</a>.
+    </span>
+    <span class="text-nowrap">
+      <button type="button" id="cookies-rechazar" class="btn btn-outline-light btn-sm">Rechazar</button>
+      <button type="button" id="cookies-aceptar" class="btn btn-primary btn-sm">Aceptar</button>
+    </span>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var aviso = document.getElementById('aviso-cookies');
+    var decision = null;
+    try { decision = localStorage.getItem('cookies_google'); } catch (e) {}
+    if (!decision) { aviso.style.display = 'block'; }
+
+    function borrarCookiesGoogle() {
+      document.cookie.split(';').forEach(function (c) {
+        var nombre = c.split('=')[0].trim();
+        if (nombre.indexOf('_ga') === 0) {
+          var vencida = '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+          document.cookie = nombre + vencida;
+          document.cookie = nombre + vencida + '; domain=.' + location.hostname.replace(/^www\./, '');
+        }
+      });
+    }
+
+    document.getElementById('cookies-aceptar').addEventListener('click', function () {
+      try { localStorage.setItem('cookies_google', 'si'); } catch (e) {}
+      aviso.style.display = 'none';
+      cargarGoogle();
+    });
+
+    document.getElementById('cookies-rechazar').addEventListener('click', function () {
+      try { localStorage.setItem('cookies_google', 'no'); } catch (e) {}
+      aviso.style.display = 'none';
+      borrarCookiesGoogle();
+    });
+
+    document.querySelectorAll('.cookies-preferencias').forEach(function (enlace) {
+    enlace.addEventListener('click', function (e) {
+        e.preventDefault();
+        try { localStorage.removeItem('cookies_google'); } catch (err) {}
+        location.reload();
+    });
+    });
+  })();
+</script>

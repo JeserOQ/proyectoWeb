@@ -3,12 +3,7 @@
 <html lang="es">
 
 <head>
-  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-PW397WKJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    </script>
+  {% include 'partials/google_tag.html' %}
     
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -66,6 +61,7 @@
   <script src="{% static 'assets/js/main.js' %}"></script>
 
   {% block extra_js %}{% endblock extra_js %}
+  {% include 'partials/cookie_banner.html' %}
 </body>
 
 </html>

@@ -480,3 +480,7 @@ def eliminar_usuario(request, pk):
     if request.method == 'POST' and usuario != request.user:
         usuario.delete()
     return redirect('home:crud_usuarios')
+
+
+def privacidad(request):
+    return render(request, 'home/privacidad.html')

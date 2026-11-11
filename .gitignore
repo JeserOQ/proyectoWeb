@@ -1,0 +1,6 @@
+.env
+*.sqlite3
+*.sql
+canaco_env/
+__pycache__/
+staticfiles/

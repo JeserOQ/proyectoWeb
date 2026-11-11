@@ -60,7 +60,9 @@
   <!-- Main JS File de ZenBlog -->
   <script src="{% static 'assets/js/main.js' %}"></script>
 
-  {% block extra_js %}{% endblock extra_js %}
+  {% block extra_js %}
+    {% include 'partials/welcome_modal.html' %}
+  {% endblock extra_js %}
   {% include 'partials/cookie_banner.html' %}
 </body>
 

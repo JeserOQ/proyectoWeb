@@ -1,0 +1,66 @@
+<div class="modal fade" id="modalBienvenida" tabindex="-1" aria-labelledby="modalBienvenidaTitulo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h2 class="modal-title fs-4" id="modalBienvenidaTitulo">¡Bienvenido a Canaco!</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div class="modal-body">
+        <p>Somos el portal informativo con las noticias mas importantes. Aquí encuentras de forma clara y sencilla lo más relevante.</p>
+
+        <ul class="list-unstyled mb-3">
+          <li class="d-flex align-items-start mb-3">
+            <i class="bi bi-newspaper me-3 fs-4" style="color: var(--accent-color);"></i>
+            <span><strong>Noticias al día</strong><br><small class="text-muted">Entérate de lo que pasa.</small></span>
+          </li>
+          <li class="d-flex align-items-start mb-3">
+            <i class="bi bi-tags me-3 fs-4" style="color: var(--accent-color);"></i>
+            <span><strong>Todo por categorías</strong><br><small class="text-muted">Encuentra rápido los temas que más te interesan.</small></span>
+          </li>
+          <li class="d-flex align-items-start">
+            <i class="bi bi-chat-dots me-3 fs-4" style="color: var(--accent-color);"></i>
+            <span><strong>Tu opinión cuenta</strong><br><small class="text-muted">Comparte lo que piensas en los comentarios de las noticias.</small></span>
+          </li>
+        </ul>
+
+        <p class="small text-muted mb-0">Tu privacidad es importante para nosotros. Consulta cómo cuidamos tus datos en el <a href="{% url 'home:privacidad' %}">aviso de privacidad</a>.</p>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Ahora no</button>
+        <a href="{% url 'home:noticia' %}" class="btn btn-primary">Explorar noticias</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var CLAVE = 'bienvenida_vista';
+    var el = document.getElementById('modalBienvenida');
+    if (!el || !window.bootstrap) { return; }
+
+    // Con ?bienvenida=1 en la dirección se fuerza a mostrarlo (útil para probar o enseñarlo).
+    var forzar = new URLSearchParams(window.location.search).has('bienvenida');
+    var visto = false;
+    try { visto = localStorage.getItem(CLAVE) === '1'; } catch (e) {}
+    if (visto && !forzar) { return; }
+
+    function mostrar() {
+      try { localStorage.setItem(CLAVE, '1'); } catch (e) {}
+      bootstrap.Modal.getOrCreateInstance(el).show();
+    }
+
+    var decidioCookies = false;
+    try { decidioCookies = !!localStorage.getItem('cookies_google'); } catch (e) {}
+
+    if (decidioCookies) {
+      setTimeout(mostrar, 800);
+    } else {
+      window.addEventListener('cookies-decididas', function () {
+        setTimeout(mostrar, 400);
+      }, { once: true });
+    }
+  })();
+</script>

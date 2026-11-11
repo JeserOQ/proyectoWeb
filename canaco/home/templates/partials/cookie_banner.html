@@ -33,12 +33,14 @@
       try { localStorage.setItem('cookies_google', 'si'); } catch (e) {}
       aviso.style.display = 'none';
       cargarGoogle();
+      window.dispatchEvent(new Event('cookies-decididas'));
     });
 
     document.getElementById('cookies-rechazar').addEventListener('click', function () {
       try { localStorage.setItem('cookies_google', 'no'); } catch (e) {}
       aviso.style.display = 'none';
       borrarCookiesGoogle();
+      window.dispatchEvent(new Event('cookies-decididas'));
     });
 
     document.querySelectorAll('.cookies-preferencias').forEach(function (enlace) {
